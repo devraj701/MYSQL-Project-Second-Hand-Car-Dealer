@@ -1,2 +1,74 @@
 # MYSQL-Project-Second-Hand-Car-Dealer
-Project Title: Second Hand Car Dealer  Ye MySQL project second-hand car dealership ke data ko analyze karta hai. Isme total cars ka count, year-wise availability, fuel type-wise distribution, aur specific queries ka answer diya gaya hai. Queries ke madhyam se manager aur clients ke questions ka solution provide kiya gaya hai.
+This MySQL project analyzes second-hand car dealership data. It includes total car count, year-wise availability, fuel type distribution, and answers to specific queries. The project helps managers and clients retrieve necessary information efficiently.
+
+CREATE SCHEMA cars;
+USE cars;
+
+# -- READ DATA --
+select * FROM car_dekho;
+
+# -- TOTAL CARS: TO GET A COUNT OF TOTAL RECORDS --
+SELECT COUNT(*) FROM car_dekho;
+
+# -- THE MANAGER ASKED THE EMPLOYEE HOW MANY CARS WILL BE AVAILABLE IN 2023? --
+SELECT COUNT(*) FROM car_dekho WHERE YEAR = 2023;
+
+# -- THE MANAGER ASKED THE EMPLOYEE HOW MANY CARS IS AVAILABLE IN 2020,2021,2022 --
+SELECT COUNT(*) FROM car_dekho WHERE YEAR = 2020;  #74
+SELECT COUNT(*) FROM car_dekho WHERE YEAR = 2021;  #7
+SELECT COUNT(*) FROM car_dekho WHERE YEAR = 2022;  #7
+
+SELECT COUNT(*) FROM car_dekho
+WHERE YEAR IN (2020,2021,2022)
+GROUP BY YEAR;
+
+# -- CLINT ASKED ME TO PRINT THE TOTAL OF ALL CARS Y YEAR. I DON'T SEE ALL THE DETAILS --
+SELECT YEAR, COUNT(*) FROM car_dekho
+GROUP BY YEAR;
+
+
+# -- CLINT ASKED TO CAR DEALER AGENT HOW MANY DIESEL CARS WILL THERE BE IN 2020? --
+SELECT COUNT(*) FROM car_dekho 
+WHERE YEAR = 2020 AND FUEL = "DIESEL";
+
+
+# -- CLINT REQUESTED A CAR DEALER AGENT HOW MANY PETROL CARS WILL THERE BE IN 2020? --
+SELECT COUNT(*) 
+FROM car_dekho
+WHERE YEAR = 2020 AND FUEL = "PETROL";  #51
+
+# -- THE MANAGER TOLD THE EMPLOYEE TO GIVE A PRINT ALL THE FUEL CARS (PETROL, DIESEL, AND CNG) COME BY ALLYEAR--
+SELECT YEAR, COUNT(*)
+FROM car_dekho 
+WHERE FUEL = "PETROL" GROUP BY YEAR;
+
+SELECT YEAR, COUNT(*)
+FROM car_dekho 
+WHERE FUEL = "DIESEL" GROUP BY YEAR;
+
+SELECT YEAR, COUNT(*)
+FROM car_dekho 
+WHERE FUEL = "CNG" GROUP BY YEAR;
+
+
+# -- MANAGER SAID THERE WERE MORE THAN 100 CARS IN A GIVEN YEAR, WHICH YEAR HAD MORE THAN 100 CARS? --
+SELECT YEAR, COUNT(*) 
+FROM car_dekho
+GROUP BY YEAR HAVING COUNT(*)>100;
+
+SELECT YEAR, COUNT(*) 
+FROM car_dekho
+GROUP BY YEAR HAVING COUNT(*)<50;
+
+# -- THE MANAGE SAID TO THE EMPLOYEE ALL CARS COUNT DETAILS BETWEEN 2015 AND 2023, WE NEED A COMPLETE LIST. --
+SELECT COUNT(*)
+FROM car_dekho
+WHERE YEAR  BETWEEN 2015 AND 2023;
+
+
+# -- THE MANAGER SAID TO THE EMPLOYEE ALL CARS DETAILS BETWEEN 2015 TO 2023 WE NEED COMPLETE LIST --
+SELECT *
+FROM car_dekho
+WHERE YEAR BETWEEN 2015 AND 2023;
+
+-- END --
